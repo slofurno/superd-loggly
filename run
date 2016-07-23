@@ -1,3 +1,3 @@
 #!/bin/sh
 
-node /app/server | loggly-cat -t $LOGGLY_TOKEN -t MY_APP
+node /app/server | loggly-cat -t $LOGGLY_TOKEN
