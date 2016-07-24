@@ -1,5 +1,8 @@
+#!/bin/bash
+
+cat << ASDF > /app/nginx.conf
 worker_processes auto;
-pid /run/nginx.pid;
+pid /app/nginx.pid;
 daemon off;
 
 events {
@@ -40,7 +43,7 @@ http {
     ##
 
     access_log /dev/null;
-    error_log /dev/stderr;
+    error_log /dev/stdout;
 
     ##
     # Gzip Settings
@@ -59,23 +62,24 @@ http {
     proxy_read_timeout 7d;
 
     server{
-        return 404;
-    }
-
-    server{
-        listen 80;
+        listen $PORT default_server;
         server_name dev.slofurno.com;
 
         location / {
             proxy_http_version 1.1;
             proxy_pass http://localhost:3000;
-            proxy_set_header  X-Real-IP        $remote_addr;
-            proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for;
-            proxy_set_header  Host             $http_host;
+            proxy_set_header  X-Real-IP        \$remote_addr;
+            proxy_set_header  X-Forwarded-For  \$proxy_add_x_forwarded_for;
+            proxy_set_header  Host             \$http_host;
             proxy_redirect    off;
 
         }
     }
 
 }
+
+ASDF
+
+echo "starting supervisor"
+exec /usr/bin/supervisord
 

@@ -1,3 +1,4 @@
 #!/bin/sh
-
-node /app/server | loggly-cat -t $LOGGLY_TOKEN
+echo "running app?"
+node /app/server
+#node /app/server | loggly-cat -t $LOGGLY_TOKEN

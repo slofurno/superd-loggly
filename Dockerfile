@@ -16,15 +16,23 @@ RUN curl -SL https://openresty.org/download/openresty-1.9.15.1.tar.gz | tar xz \
 RUN curl -SL https://nodejs.org/dist/v6.3.1/node-v6.3.1-linux-x64.tar.xz | \
   tar xJ -C /usr/local --strip-components=1
 
-RUN curl -SL https://github.com/segmentio/loggly-cat/archive/v1.0.0.tar.gz | \
-  tar xz -C /usr/local/bin
+RUN cd /usr/local/bin && curl -SOL https://github.com/segmentio/loggly-cat/releases/download/v1.0.0/loggly-cat && chmod +x ./loggly-cat
 
-RUN mkdir -p /var/log/nginx
-COPY server/* /app/server
-COPY run /app
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY nginx.conf /usr/local/openresty/nginx/conf
+WORKDIR app
+ENV HOME="/app"
 
-EXPOSE 80
+RUN chmod 0777 -R /usr/local
+RUN chmod 0777 -R /app
 
-CMD ["/usr/bin/supervisord"]
+ONBUILD RUN mkdir -p /var/log/nginx /var/log/supervisor
+ONBUILD COPY server/* ./server/
+ONBUILD COPY run .
+ONBUILD COPY supervisord.conf /etc/supervisor/supervisord.conf
+ONBUILD COPY nginx.conf /usr/local/openresty/nginx/conf
+ONBUILD RUN ln -sf /dev/stdout /app/supervisord.log
+ONBUILD COPY entrypoint ./
+
+RUN useradd testuser
+USER testuser
+
+CMD ["/app/entrypoint"]
