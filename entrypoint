@@ -66,7 +66,7 @@ http {
 
         location / {
             access_by_lua_block {
-              ngx.log(ngx.NOTICE, "--------------------------> localhost:3000 + host: " .. ngx.var.http_host)
+              ngx.log(ngx.NOTICE, "heroku port: " .. "$PORT")
             }
             proxy_http_version 1.1;
             proxy_pass http://localhost:3000;
