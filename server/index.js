@@ -19,7 +19,8 @@ app.get('/', (req, res) => {
       return logger.error(`bad status code: ${response.statusCode}`, body)
     }
 
-    res.json(body)
+    res.set('Content-Type', 'application/json');
+    res.send(body)
     logger.info(util.inspect(process.memoryUsage()))
   })
 })
