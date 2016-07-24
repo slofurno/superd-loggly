@@ -81,5 +81,5 @@ http {
 ASDF
 
 echo "starting supervisor"
-exec /usr/bin/supervisord
+exec /usr/bin/supervisord -c /app/supervisord.conf
 

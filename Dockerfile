@@ -24,13 +24,11 @@ ENV HOME="/app"
 RUN chmod 0777 -R /usr/local
 RUN chmod 0777 -R /app
 
-ONBUILD RUN mkdir -p /var/log/nginx /var/log/supervisor
-ONBUILD COPY server/* ./server/
-ONBUILD COPY run .
-ONBUILD COPY supervisord.conf /etc/supervisor/supervisord.conf
-ONBUILD COPY nginx.conf /usr/local/openresty/nginx/conf
-ONBUILD RUN ln -sf /dev/stdout /app/supervisord.log
-ONBUILD COPY entrypoint ./
+COPY server/* ./server/
+COPY run .
+COPY supervisord.conf /app/supervisord.conf
+COPY nginx.conf /usr/local/openresty/nginx/conf
+COPY entrypoint ./
 
 RUN useradd testuser
 USER testuser
