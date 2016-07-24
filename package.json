@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/slofurno/superd-loggly#readme",
   "dependencies": {
+    "express": "^4.14.0",
     "log4js": "^0.6.38",
     "request": "^2.74.0"
   }
