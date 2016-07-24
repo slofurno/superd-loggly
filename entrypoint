@@ -42,8 +42,8 @@ http {
     # Logging Settings
     ##
 
-    access_log /dev/null;
-    error_log /dev/stdout debug;
+    access_log /dev/stdout;
+    error_log /dev/stderr info;
 
     ##
     # Gzip Settings
@@ -65,9 +65,7 @@ http {
         listen $PORT default_server;
 
         location / {
-            access_by_lua_block {
-              ngx.log(ngx.NOTICE, "heroku port: " .. "$PORT")
-            }
+
             proxy_http_version 1.1;
             proxy_pass http://localhost:3000;
             proxy_set_header  X-Real-IP        \$remote_addr;
@@ -82,9 +80,7 @@ http {
       listen unix:/tmp/asdf.sock default_server;
 
       location / {
-        access_by_lua_block {
-          ngx.log(ngx.NOTICE, "--------------------------> asdf.sock + host: " .. ngx.var.http_host)
-        }
+
         proxy_http_version 1.1;
         proxy_redirect off;
         proxy_set_header Authorization qazwsx;
@@ -96,9 +92,6 @@ http {
       listen 127.0.1.4:4444 default_server;
 
       location / {
-        access_by_lua_block {
-          ngx.log(ngx.NOTICE, "--------------------------> 4444 + host: " .. ngx.var.http_host)
-        }
 
         proxy_redirect off;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
