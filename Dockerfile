@@ -23,6 +23,7 @@ ENV HOME="/app"
 
 RUN chmod 0777 -R /usr/local
 RUN chmod 0777 -R /app
+RUN echo "127.0.1.4 pokemon" | tee -a /etc/hosts
 
 COPY node_modules /app/node_modules
 COPY server/* ./server/

@@ -76,6 +76,16 @@ http {
         }
     }
 
+    server {
+      listen unix:/tmp/asdf.sock;
+
+      location / {
+        proxy_redirect off;
+        proxy_set_header Authorization qazwsx;
+        proxy_pass http://polar-dawn-55181.herokuapp.com;
+      }
+    }
+
 }
 
 ASDF
