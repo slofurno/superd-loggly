@@ -6,14 +6,14 @@ const log4js = require('log4js')
 const logger = log4js.getLogger()
 
 http.createServer((req, res) => {
-  request('http://unix:/tmp/asdf.sock', (err, res, body) => {
+  request('http://unix:/tmp/asdf.sock:/pokemon', (err, res, body) => {
     if (err) {
       return logger.error(err)
     } else if(res.statusCode !== 200){
       return logger.error(`bad status code: ${res.statusCode}`)
     }
 
-    res.end(JSON.stringify(asdf));
+    res.json(body)
     logger.info(util.inspect(process.memoryUsage()))
   })
 }).listen(3000)

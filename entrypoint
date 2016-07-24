@@ -63,7 +63,6 @@ http {
 
     server{
         listen $PORT default_server;
-        server_name dev.slofurno.com;
 
         location / {
             proxy_http_version 1.1;
@@ -80,6 +79,7 @@ http {
       listen unix:/tmp/asdf.sock;
 
       location / {
+        proxy_http_version 1.1;
         proxy_redirect off;
         proxy_set_header Authorization qazwsx;
         proxy_pass http://polar-dawn-55181.herokuapp.com;

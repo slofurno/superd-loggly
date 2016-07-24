@@ -29,7 +29,6 @@ COPY node_modules /app/node_modules
 COPY server/* ./server/
 COPY run .
 COPY supervisord.conf /app/supervisord.conf
-COPY nginx.conf /usr/local/openresty/nginx/conf
 COPY entrypoint ./
 
 RUN useradd testuser
