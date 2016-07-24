@@ -1,4 +1,8 @@
 const http = require('http')
+const util = require('util')
+
+const log4js = require('log4js')
+const logger = log4js.getLogger()
 
 const asdf = {
   one: 1,
@@ -10,6 +14,7 @@ const asdf = {
 
 http.createServer((req, res) => {
   setTimeout(() => {
+    logger.info(util.inspect(process.memoryUsage()))
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.end(JSON.stringify(asdf));
   }, 2000)

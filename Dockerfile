@@ -24,6 +24,7 @@ ENV HOME="/app"
 RUN chmod 0777 -R /usr/local
 RUN chmod 0777 -R /app
 
+COPY node_modules /app/node_modules
 COPY server/* ./server/
 COPY run .
 COPY supervisord.conf /app/supervisord.conf
